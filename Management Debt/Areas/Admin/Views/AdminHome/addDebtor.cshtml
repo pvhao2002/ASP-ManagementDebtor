@@ -1,0 +1,61 @@
+﻿@model Management_Debt.Models.Debtor
+@{
+    ViewBag.Title = "Add Debtor";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "Chưa trả hết nợ",
+        Value = "0"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Đã trả hết nợ",
+        Value = "1",
+        Selected = true
+   });
+    string message = ViewBag.message;
+    string z = ViewBag.m;
+}
+
+@section css{
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/form.add.css" />
+}
+@if (message != null && z != null)
+{
+    <p class="message @z">@message</p>
+}
+<section id="content1" class="container1">
+    @using (Html.BeginForm("addDebtor", "AdminHome", FormMethod.Post))
+    {
+        <h1>Form add information of debtor</h1>
+        <p>Please type new information.</p>
+        <hr>
+        <label for="id"><b>ID</b></label>
+        @Html.TextBoxFor(m => m.did, new { @placeholder = "Type id of debtor", @required = "required", @autofocus = "autofocus" })
+
+        <label for="name"><b>Full name</b></label>
+        @Html.TextBoxFor(m => m.full_name, new { @placeholder = "Type full name of debtor", @required = "required" })
+
+        <label for="email"><b>Email</b></label>
+        @Html.TextBoxFor(m => m.email, new { @placeholder = "Type email of debtor", @type = "email", @required = "required" })
+
+        <label for="birthday"><b>Birthday</b></label>
+        @Html.TextBoxFor(m => m.birthday, new { @type = "date", @required = "required" })
+
+        <label for="status"><b>Status</b></label>
+
+        @Html.DropDownListFor(m => m.status, listItems, "-- Select Status --")
+
+
+        <label for="lyric"><b>Address</b></label>
+        @Html.TextAreaFor(m => m.address, new { @rows = "4", @placeholder = "Type address of debtor" })
+
+        <div class="clearfix">
+            <input type="submit" name="add" value="Add" class="btnAdd2" />
+        </div>
+    }
+</section>
+

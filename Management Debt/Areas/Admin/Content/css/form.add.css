@@ -1,0 +1,119 @@
+﻿
+#content1
+{
+    border-radius: 10px;
+    border: 2px solid #808080;
+    width: 70%;
+    margin: 10px auto;
+}
+
+    #content1.container1 h1,
+    #content1.container1 label
+    {
+        color: DodgerBlue;
+    }
+
+    #content1.container1 form
+    {
+        margin: 0 auto;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+        #content1.container1 input[type=text],
+        #content1.container1 input[type=email],
+        #content1.container1 input[type=date],
+        #content1.container1 form select,
+        #content1.container1 form option,
+        #content1.container1 textarea
+        {
+            width: 100%;
+            padding: 15px;
+            /* margin: 5px 0 22px 0; */
+            display: inline-block;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 0;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+            #content1.container1 input[type=text]:focus,
+            #content1.container1 input[type=email]:focus,
+            #content1.container1 input[type=date]:focus,
+            #content1.container1 form select:focus,
+            #content1.container1 form option:focus,
+            #content1.container1 textarea
+            {
+                outline: none;
+            }
+
+#content1 input[type="submit"]
+{
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+#content1 input[type="submit"]:hover
+{
+    opacity: 1;
+}
+
+.cancelbtn
+{
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+
+.btnAdd2
+{
+    float: left;
+    width: 100%;
+    border-radius: 15px;
+    border: 0;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container1
+{
+    padding: 16px;
+}
+
+.clearfix::after
+{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.message
+{
+    height: 40px;
+    width: 100%;
+    font-weight: 500;
+    padding-left: 10vw;
+    padding-top: 10px;
+    font-size: 20px;
+}
+
+
+    .message.error
+    {
+        color: #000;
+        background-color: lightcoral;
+    }
+
+    .message.succ
+    {
+        color: white;
+        background-color: lightgreen;
+    }

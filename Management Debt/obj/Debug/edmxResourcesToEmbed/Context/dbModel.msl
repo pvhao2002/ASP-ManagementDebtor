@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ManagementDebtModelStoreContainer" CdmEntityContainer="ManagementDebtEntities">
+    <EntitySetMapping Name="DebitNotes">
+      <EntityTypeMapping TypeName="ManagementDebtModel.DebitNote">
+        <MappingFragment StoreEntitySet="DebitNote">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="did" ColumnName="did" />
+          <ScalarProperty Name="uid" ColumnName="uid" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="pay_date" ColumnName="pay_date" />
+          <ScalarProperty Name="loan_date" ColumnName="loan_date" />
+          <ScalarProperty Name="payment_type" ColumnName="payment_type" />
+          <ScalarProperty Name="money" ColumnName="money" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Debtors">
+      <EntityTypeMapping TypeName="ManagementDebtModel.Debtor">
+        <MappingFragment StoreEntitySet="Debtor">
+          <ScalarProperty Name="did" ColumnName="did" />
+          <ScalarProperty Name="nid" ColumnName="nid" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DebtorUsers">
+      <EntityTypeMapping TypeName="ManagementDebtModel.DebtorUser">
+        <MappingFragment StoreEntitySet="DebtorUser">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="did" ColumnName="did" />
+          <ScalarProperty Name="uid" ColumnName="uid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ManagementDebtModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="uid" ColumnName="uid" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="confirm_email" ColumnName="confirm_email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

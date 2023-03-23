@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bfacfef6cc8a4ecf8cde2a2ca620ed7b" Name="Diagram1">
+        <EntityTypeShape EntityType="ManagementDebtModel.DebitNote" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementDebtModel.Debtor" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementDebtModel.DebtorUser" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="ManagementDebtModel.User" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="ManagementDebtModel.FK_DebitNote_Debtor" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementDebtModel.FK_DebitNote_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementDebtModel.FK_DebtorUser_Debtor" ManuallyRouted="false" />
+        <AssociationConnector Association="ManagementDebtModel.FK_DebtorUser_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

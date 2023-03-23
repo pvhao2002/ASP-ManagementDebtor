@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ManagementDebtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DebitNote">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="uid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="pay_date" Type="DateTime" Precision="3" />
+    <Property Name="loan_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="payment_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="money" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Debtor" Relationship="Self.FK_DebitNote_Debtor" FromRole="DebitNote" ToRole="Debtor" />
+    <NavigationProperty Name="User" Relationship="Self.FK_DebitNote_User" FromRole="DebitNote" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Debtor">
+    <Key>
+      <PropertyRef Name="did" />
+    </Key>
+    <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="nid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="birthday" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DebitNotes" Relationship="Self.FK_DebitNote_Debtor" FromRole="Debtor" ToRole="DebitNote" />
+    <NavigationProperty Name="DebtorUsers" Relationship="Self.FK_DebtorUser_Debtor" FromRole="Debtor" ToRole="DebtorUser" />
+  </EntityType>
+  <EntityType Name="DebtorUser">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="uid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Debtor" Relationship="Self.FK_DebtorUser_Debtor" FromRole="DebtorUser" ToRole="Debtor" />
+    <NavigationProperty Name="User" Relationship="Self.FK_DebtorUser_User" FromRole="DebtorUser" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="confirm_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DebitNotes" Relationship="Self.FK_DebitNote_User" FromRole="User" ToRole="DebitNote" />
+    <NavigationProperty Name="DebtorUsers" Relationship="Self.FK_DebtorUser_User" FromRole="User" ToRole="DebtorUser" />
+  </EntityType>
+  <Association Name="FK_DebitNote_Debtor">
+    <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+    <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Debtor">
+        <PropertyRef Name="did" />
+      </Principal>
+      <Dependent Role="DebitNote">
+        <PropertyRef Name="did" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebitNote_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uid" />
+      </Principal>
+      <Dependent Role="DebitNote">
+        <PropertyRef Name="uid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtorUser_Debtor">
+    <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+    <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Debtor">
+        <PropertyRef Name="did" />
+      </Principal>
+      <Dependent Role="DebtorUser">
+        <PropertyRef Name="did" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtorUser_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uid" />
+      </Principal>
+      <Dependent Role="DebtorUser">
+        <PropertyRef Name="uid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ManagementDebtEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DebitNotes" EntityType="Self.DebitNote" />
+    <EntitySet Name="Debtors" EntityType="Self.Debtor" />
+    <EntitySet Name="DebtorUsers" EntityType="Self.DebtorUser" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_DebitNote_Debtor" Association="Self.FK_DebitNote_Debtor">
+      <End Role="Debtor" EntitySet="Debtors" />
+      <End Role="DebitNote" EntitySet="DebitNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebitNote_User" Association="Self.FK_DebitNote_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="DebitNote" EntitySet="DebitNotes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtorUser_Debtor" Association="Self.FK_DebtorUser_Debtor">
+      <End Role="Debtor" EntitySet="Debtors" />
+      <End Role="DebtorUser" EntitySet="DebtorUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtorUser_User" Association="Self.FK_DebtorUser_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="DebtorUser" EntitySet="DebtorUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

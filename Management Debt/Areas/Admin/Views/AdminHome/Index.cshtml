@@ -1,0 +1,134 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.PagedList<Management_Debt.Models.Debtor>
+@{
+    ViewBag.Title = "Index";
+    var s = Session["status"];
+
+    int status = (s == null) ? 3 : int.Parse(s.ToString());
+}
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/Areas/Admin/Content/css/home.admin.css" />
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/form.add.css" />
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/pager.css" />
+}
+
+
+<div class="content">
+    <a href="@Url.Action("addDebtor","AdminHome")" id="btnAdd1" style="margin-top: 30px;" class="btnAdd1">
+        <i class="bi bi-plus-square"></i>
+        Add
+    </a>
+    <div class="container">
+        <div class="top">
+            <div class="info-debtor">
+                <h2>Thông tin người nợ</h2>
+                <p>Tổng cộng: @Model.Count bản ghi</p>
+            </div>
+            <div class="filter">
+                <label for="loc">Hiển thị theo:</label>
+                <select name="loc" id="status" onchange="change(this);">
+                    <option value="3">Tất cả</option>
+                    <option value="0">Chưa trả hết nợ</option>
+                    <option value="1">Đã trả hết nợ</option>
+                </select>
+            </div>
+        </div>
+        <hr />
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Birthday</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.did</td>
+                    <td>@item.full_name</td>
+                    <td>@item.email</td>
+                    <td>@item.address</td>
+                    <td>@item.birthday</td>
+                    @if (item.status == 1)
+                    {
+                        <td>
+                            Đã trả hết nợ
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            Chưa trả hết nợ
+                        </td>
+                    }
+                    <td>
+                        <a href="@Url.Action("updateDebtor", "AdminHome", new {id=item.did})" class="btnEdit">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="@Url.Action("removeDebtor", "AdminHome", new {id=item.did})" class="btnDelete" onclick="return confirm(`Are you sure to want to delete this debtor?`)">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div class="pager">
+            <p class="page-item">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+            </p>
+
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("Index", "AdminHome", new { page, status = status }),
+           new PagedListRenderOptions
+           {
+               DisplayLinkToIndividualPages = true,
+               DisplayPageCountAndCurrentLocation = false,
+               LiElementClasses = new string[] { "page-item" }
+           })
+            </div>
+        </div>
+    </div>
+</div>
+@if (status == 3)
+{
+    <script>
+        const st = document.getElementById('status')
+        st.options[0].selected = true;
+    </script>
+}
+
+@if (status == 1)
+{
+    <script>
+        const st = document.getElementById('status')
+        st.options[2].selected = true;
+    </script>
+}
+
+@if (status == 0)
+{
+    <script>
+        const st = document.getElementById('status')
+        st.options[1].selected = true;
+    </script>
+}
+<script>
+    function change(obj) {
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        let value = params.find;
+        if (value !== null) {
+            window.location.href = '/Admin/AdminHome/Index?find=' + value + '&page=1&status=' + obj.value;
+        } else {
+            window.location.href = '/Admin/AdminHome/Index?page=1&status=' + obj.value;
+        }
+    }
+</script>
+

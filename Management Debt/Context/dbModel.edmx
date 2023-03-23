@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ManagementDebtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DebitNote">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="did" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="uid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="200" />
+          <Property Name="pay_date" Type="datetime" />
+          <Property Name="loan_date" Type="datetime" Nullable="false" />
+          <Property Name="payment_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="money" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Debtor">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="nid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="birthday" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DebtorUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="did" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="uid" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="confirm_email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_DebitNote_Debtor">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="DebitNote">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebitNote_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="DebitNote">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebtorUser_Debtor">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="DebtorUser">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebtorUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="DebtorUser">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ManagementDebtModelStoreContainer">
+          <EntitySet Name="DebitNote" EntityType="Self.DebitNote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DebtorUser" EntityType="Self.DebtorUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DebitNote_Debtor" Association="Self.FK_DebitNote_Debtor">
+            <End Role="Debtor" EntitySet="Debtor" />
+            <End Role="DebitNote" EntitySet="DebitNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebitNote_User" Association="Self.FK_DebitNote_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DebitNote" EntitySet="DebitNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebtorUser_Debtor" Association="Self.FK_DebtorUser_Debtor">
+            <End Role="Debtor" EntitySet="Debtor" />
+            <End Role="DebtorUser" EntitySet="DebtorUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebtorUser_User" Association="Self.FK_DebtorUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DebtorUser" EntitySet="DebtorUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ManagementDebtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DebitNote">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="pay_date" Type="DateTime" Precision="3" />
+          <Property Name="loan_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="payment_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="money" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Debtor" Relationship="Self.FK_DebitNote_Debtor" FromRole="DebitNote" ToRole="Debtor" />
+          <NavigationProperty Name="User" Relationship="Self.FK_DebitNote_User" FromRole="DebitNote" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Debtor">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="birthday" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DebitNotes" Relationship="Self.FK_DebitNote_Debtor" FromRole="Debtor" ToRole="DebitNote" />
+          <NavigationProperty Name="DebtorUsers" Relationship="Self.FK_DebtorUser_Debtor" FromRole="Debtor" ToRole="DebtorUser" />
+        </EntityType>
+        <EntityType Name="DebtorUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="did" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Debtor" Relationship="Self.FK_DebtorUser_Debtor" FromRole="DebtorUser" ToRole="Debtor" />
+          <NavigationProperty Name="User" Relationship="Self.FK_DebtorUser_User" FromRole="DebtorUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="confirm_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DebitNotes" Relationship="Self.FK_DebitNote_User" FromRole="User" ToRole="DebitNote" />
+          <NavigationProperty Name="DebtorUsers" Relationship="Self.FK_DebtorUser_User" FromRole="User" ToRole="DebtorUser" />
+        </EntityType>
+        <Association Name="FK_DebitNote_Debtor">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="DebitNote">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebitNote_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="DebitNote">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebtorUser_Debtor">
+          <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+          <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Debtor">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="DebtorUser">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebtorUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="DebtorUser">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ManagementDebtEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DebitNotes" EntityType="Self.DebitNote" />
+          <EntitySet Name="Debtors" EntityType="Self.Debtor" />
+          <EntitySet Name="DebtorUsers" EntityType="Self.DebtorUser" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_DebitNote_Debtor" Association="Self.FK_DebitNote_Debtor">
+            <End Role="Debtor" EntitySet="Debtors" />
+            <End Role="DebitNote" EntitySet="DebitNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebitNote_User" Association="Self.FK_DebitNote_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DebitNote" EntitySet="DebitNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebtorUser_Debtor" Association="Self.FK_DebtorUser_Debtor">
+            <End Role="Debtor" EntitySet="Debtors" />
+            <End Role="DebtorUser" EntitySet="DebtorUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebtorUser_User" Association="Self.FK_DebtorUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DebtorUser" EntitySet="DebtorUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ManagementDebtModelStoreContainer" CdmEntityContainer="ManagementDebtEntities">
+          <EntitySetMapping Name="DebitNotes">
+            <EntityTypeMapping TypeName="ManagementDebtModel.DebitNote">
+              <MappingFragment StoreEntitySet="DebitNote">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="pay_date" ColumnName="pay_date" />
+                <ScalarProperty Name="loan_date" ColumnName="loan_date" />
+                <ScalarProperty Name="payment_type" ColumnName="payment_type" />
+                <ScalarProperty Name="money" ColumnName="money" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Debtors">
+            <EntityTypeMapping TypeName="ManagementDebtModel.Debtor">
+              <MappingFragment StoreEntitySet="Debtor">
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="nid" ColumnName="nid" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DebtorUsers">
+            <EntityTypeMapping TypeName="ManagementDebtModel.DebtorUser">
+              <MappingFragment StoreEntitySet="DebtorUser">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ManagementDebtModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="confirm_email" ColumnName="confirm_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

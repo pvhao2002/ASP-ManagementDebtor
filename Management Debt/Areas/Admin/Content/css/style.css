@@ -1,0 +1,133 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap");
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body
+{
+    font-family: "Open Sans", sans-serif;
+    color: #111111;
+    background-color: #ffffff;
+    overflow-x: hidden;
+}
+
+
+header
+{
+    height: 70px;
+    width: 100vw;
+    border-bottom: 2px solid #000;
+}
+
+#logo
+{
+    height: 30%;
+    width: 50px;
+    margin: 10px;
+}
+
+nav
+{
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    z-index: -1;
+}
+
+.main-menu
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 30px;
+    width: 20%;
+    height: 100%;
+    list-style-type: none;
+}
+
+    .main-menu li:nth-child(2n+1)
+    {
+        background-color: dodgerblue;
+        color: white;
+        padding: 8px;
+        width: 35%;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+        .main-menu li:nth-child(2n+1):hover
+        {
+            background-color: white;
+            border: 2px solid dodgerblue;
+            color: dodgerblue;
+            cursor: pointer;
+        }
+
+    .main-menu li:nth-child(2n+2):hover
+    {
+        background-color: white;
+        border: 2px solid lightgray;
+        color: lightgray;
+        cursor: pointer;
+    }
+
+    .main-menu li:nth-child(2n+2)
+    {
+        background-color: lightgray;
+        color: black;
+        padding: 8px;
+        width: 35%;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .main-menu a
+    {
+        text-decoration: none;
+    }
+
+
+.search
+{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid lightgray;
+    width: 350px;
+    height: 30px;
+    justify-content: space-between;
+}
+
+.frmSearch
+{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
+    .frmSearch i
+    {
+        margin-right: 4px;
+    }
+
+    .frmSearch input[type="text"]
+    {
+        width: 90%;
+        padding-left: 10px;
+    }
+
+    .frmSearch input
+    {
+        border: none;
+    }
+
+        .frmSearch input:focus-visible
+        {
+            outline: none;
+            border: none;
+        }

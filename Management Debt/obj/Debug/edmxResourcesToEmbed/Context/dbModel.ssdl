@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ManagementDebtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DebitNote">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="did" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="uid" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="note" Type="nvarchar" MaxLength="200" />
+    <Property Name="pay_date" Type="datetime" />
+    <Property Name="loan_date" Type="datetime" Nullable="false" />
+    <Property Name="payment_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="money" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Debtor">
+    <Key>
+      <PropertyRef Name="did" />
+    </Key>
+    <Property Name="did" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="nid" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="address" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="birthday" Type="nvarchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DebtorUser">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="did" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="uid" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="confirm_email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_DebitNote_Debtor">
+    <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+    <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Debtor">
+        <PropertyRef Name="did" />
+      </Principal>
+      <Dependent Role="DebitNote">
+        <PropertyRef Name="did" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebitNote_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="DebitNote" Type="Self.DebitNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uid" />
+      </Principal>
+      <Dependent Role="DebitNote">
+        <PropertyRef Name="uid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtorUser_Debtor">
+    <End Role="Debtor" Type="Self.Debtor" Multiplicity="1" />
+    <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Debtor">
+        <PropertyRef Name="did" />
+      </Principal>
+      <Dependent Role="DebtorUser">
+        <PropertyRef Name="did" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DebtorUser_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="DebtorUser" Type="Self.DebtorUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="uid" />
+      </Principal>
+      <Dependent Role="DebtorUser">
+        <PropertyRef Name="uid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ManagementDebtModelStoreContainer">
+    <EntitySet Name="DebitNote" EntityType="Self.DebitNote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Debtor" EntityType="Self.Debtor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DebtorUser" EntityType="Self.DebtorUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DebitNote_Debtor" Association="Self.FK_DebitNote_Debtor">
+      <End Role="Debtor" EntitySet="Debtor" />
+      <End Role="DebitNote" EntitySet="DebitNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebitNote_User" Association="Self.FK_DebitNote_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="DebitNote" EntitySet="DebitNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtorUser_Debtor" Association="Self.FK_DebtorUser_Debtor">
+      <End Role="Debtor" EntitySet="Debtor" />
+      <End Role="DebtorUser" EntitySet="DebtorUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DebtorUser_User" Association="Self.FK_DebtorUser_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="DebtorUser" EntitySet="DebtorUser" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
